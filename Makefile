@@ -7,4 +7,4 @@ fmt:
 	$(FMT) .
 
 check:
-	pytest .
+	pytest . --log-cli-level=DEBUG

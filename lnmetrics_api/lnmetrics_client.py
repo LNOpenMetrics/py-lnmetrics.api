@@ -22,12 +22,20 @@ class LNMetricsClient:
         """Generic method to make a query to the Graphql Server"""
         return self.client.execute(query, variable_values=variables)
 
+    @staticmethod
+    def __unwrap_error(query_name: str, payload: dict) -> dict:
+        if "error" in payload:
+            raise Exception(f"{payload['error']}")
+        assert query_name in payload
+        return payload[query_name]
+
     def get_node(self, network: str, node_id: str) -> dict:
         """Retrieval the node information for {node_id} on the {network}"""
         # TODO: adding query
         query = gql(GET_NODE)
         variables = {"network": network, "node_id": node_id}
-        return self.call(query, variables=variables)
+        resp = self.call(query, variables=variables)
+        return LNMetricsClient.__unwrap_error("getNode", resp)
 
     def get_nodes(self, network: str) -> dict:
         """get the list of all the nodes on the server"""
@@ -35,17 +43,26 @@ class LNMetricsClient:
         variables = {
             "network": network,
         }
-        return self.call(query, variables=variables)
+        resp = self.call(query, variables=variables)
+        return LNMetricsClient.__unwrap_error("getNodes", resp)
 
     def get_metric_one(
         self, network: str, node_id: str, first: int = None, last: int = None
     ) -> dict:
-        """get the list of metrics of the {node_id}, with the possibility to filter by the period {first} {last}"""
+        """Get the metrics collected during the time between [first and last]
+
+        :param network: The network where we want to collect the data
+        :param node_id: the node pub key of the lightnign network node
+        :param first: the first timestamp where the user is interested about
+        :param last: the last timestamp where the user is interested (not must that 6h from the first)
+        :return a JSON response that contains the PageInfo to implement the iteration, if the user want get more metrics
+        """
         query = gql(GET_METRIC_ONE)
         variables = {
-            "network": network,
+            # "network": network,
             "node_id": node_id,
-            "first": first,
-            "last": last,
+            "first": int(first),
+            "last": int(last),
         }
-        return self.call(query, variables=variables)
+        resp = self.call(query, variables=variables)
+        return LNMetricsClient.__unwrap_error("metricOne", resp)
