@@ -64,6 +64,36 @@ query MetricOne($node_id: String!, $first: Int!, $last: Int!){
       end
       hash_next_page
     }
+    channels_info {
+      node_id
+      channel_id
+      node_alias
+      color
+      capacity
+      forwards {
+        direction
+        status
+        failure_reason
+        failure_code
+        timestamp
+      }
+      up_time {
+        event
+        status
+        timestamp
+      }
+      online
+      last_update
+      direction
+      fee {
+        base
+        per_msat
+      }
+      limits {
+        min
+        max
+      }
+    }
     up_time {
       event
       channels {
