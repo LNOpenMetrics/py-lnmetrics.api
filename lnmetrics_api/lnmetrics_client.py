@@ -4,8 +4,11 @@ Open LN metrics services.
 
 author: https://github.com/vincenzopalazzo
 """
+import logging
+
 from gql import gql, Client
 from gql.transport.aiohttp import AIOHTTPTransport
+from gql.transport.requests import log as requests_logger
 from .queries import GET_NODE, GET_NODES, GET_METRIC_ONE
 
 
@@ -14,9 +17,16 @@ class LNMetricsClient:
     LNMetrics Client implementation
     """
 
-    def __init__(self, service_url: str) -> None:
+    def __init__(
+        self, service_url: str, timeout: int = 40, log_level=logging.WARNING
+    ) -> None:
         transport = AIOHTTPTransport(url=service_url)
-        self.client = Client(transport=transport, fetch_schema_from_transport=True)
+        requests_logger.setLevel(log_level)
+        self.client = Client(
+            transport=transport,
+            fetch_schema_from_transport=True,
+            execute_timeout=timeout,
+        )
 
     def call(self, query, variables: dict = None) -> dict:
         """Generic method to make a query to the Graphql Server"""
