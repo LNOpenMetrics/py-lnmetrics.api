@@ -62,7 +62,7 @@ query MetricOne($node_id: String!, $first: Int!, $last: Int!){
     page_info {
       start
       end
-      hash_next_page
+      has_next
     }
     channels_info {
       node_id

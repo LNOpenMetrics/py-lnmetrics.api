@@ -53,7 +53,7 @@ def test_get_metric_one_paginator(client: LNMetricsClient) -> None:
 
     assert "page_info" in response
     page_info = response["page_info"]
-    has_next = page_info["hash_next_page"]
+    has_next = page_info["has_next"]
     counting_request = 1
     while has_next:
         first = page_info["start"]
@@ -68,6 +68,6 @@ def test_get_metric_one_paginator(client: LNMetricsClient) -> None:
         counting_request += 1
         assert "page_info" in response
         page_info = response["page_info"]
-        has_next = page_info["hash_next_page"]
+        has_next = page_info["has_next"]
     # TODO: check why this fails
     # assert counting_request == 4
