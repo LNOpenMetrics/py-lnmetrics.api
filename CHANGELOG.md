@@ -1,3 +1,9 @@
+# v0.0.5
+
+## Fixed
+- fix api call by support the modern server api ([commit](https://github.com/LNOpenMetrics/py-lnmetrics.api/commit/d3a285334d6a903a0da6fcb816b0664d1942243b)). @vincenzopalazzo 22-02-2023
+
+
 # v0.0.4
 
 ## Added
