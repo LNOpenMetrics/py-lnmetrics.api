@@ -5,6 +5,7 @@ Open LN metrics services.
 author: https://github.com/vincenzopalazzo
 """
 import logging
+from typing import Dict, Optional, Union
 
 from gql import gql, Client
 from gql.transport.aiohttp import AIOHTTPTransport
@@ -28,7 +29,7 @@ class LNMetricsClient:
             execute_timeout=timeout,
         )
 
-    def call(self, query, variables: dict = None) -> dict:
+    def call(self, query, variables: Optional[Dict] = None) -> Dict:
         """Generic method to make a query to the Graphql Server"""
         return self.client.execute(query, variable_values=variables)
 
@@ -56,8 +57,17 @@ class LNMetricsClient:
         resp = self.call(query, variables=variables)
         return LNMetricsClient.__unwrap_error("getNodes", resp)
 
+    def cast_to_int_or_none(self, value: Optional[int]) -> Optional[int]:
+        if value is None:
+            return value
+        return int(value)
+
     def get_metric_one(
-        self, network: str, node_id: str, first: int = None, last: int = None
+        self,
+        network: str,
+        node_id: str,
+        first: Optional[int] = None,
+        last: Optional[int] = None,
     ) -> dict:
         """Get the metrics collected during the time between [first and last]
 
@@ -69,10 +79,10 @@ class LNMetricsClient:
         """
         query = gql(GET_METRIC_ONE)
         variables = {
-            # "network": network,
+            "network": network,
             "node_id": node_id,
-            "first": int(first),
-            "last": int(last),
+            "first": self.cast_to_int_or_none(first),
+            "last": self.cast_to_int_or_none(last),
         }
         resp = self.call(query, variables=variables)
         return LNMetricsClient.__unwrap_error("metricOne", resp)

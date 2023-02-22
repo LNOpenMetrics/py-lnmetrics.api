@@ -57,8 +57,8 @@ query GetNodes($network: String!){
 """
 
 GET_METRIC_ONE = """
-query MetricOne($node_id: String!, $first: Int!, $last: Int!){
-  metricOne(node_id: $node_id, first: $first, last: $last) {
+query MetricOne($network: String!, $node_id: String!, $first: Int!, $last: Int!){
+  metricOne(network: $network,  node_id: $node_id, first: $first, last: $last) {
     page_info {
       start
       end
