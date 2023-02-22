@@ -1,10 +1,10 @@
 {
   "package_name": "py-lnmetrics.api",
-  "version": "v0.0.4",
+  "version": "v0.0.5",
   "api": {
     "name": "github",
     "repository": "LNOpenMetrics/py-lnmetrics.api",
-    "branch": "main"
+    "branch": "macros/api"
   },
   "generation_method": {
     "name": "metadata",
