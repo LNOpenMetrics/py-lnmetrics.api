@@ -1,3 +1,9 @@
+# v0.0.7
+
+## Added
+- add the possibility to run an sync client ([commit](https://github.com/LNOpenMetrics/py-lnmetrics.api/commit/e4deadf4e3996531b335688ecb5d53c16ec9822e)). @vincenzopalazzo 21-03-2023
+
+
 # v0.0.6
 
 ## Added
