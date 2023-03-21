@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lnmetrics.api"
-version = "0.0.5"
+version = "0.0.6"
 description = "Python implementation of the lnmetrics API to query the lnmetrics services"
 authors = ["Vincenzo Palazzo <vincenzopalazzodev@gmail.com>"]
 

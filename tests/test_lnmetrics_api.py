@@ -71,3 +71,14 @@ def test_get_metric_one_paginator(client: LNMetricsClient) -> None:
         has_next = page_info["has_next"]
     # TODO: check why this fails
     # assert counting_request == 4
+
+
+def test_get_local_reputation_out(client: LNMetricsClient) -> None:
+    """Get the metrics from one node"""
+    response = client.get_local_score_output(
+        network="bitcoin",
+        node_id="024b9a1fa8e006f1e3937f65f66c408e6da8e1ca728ea43222a7381df1cc449605",
+    )
+    logging.debug(response)
+    assert response["up_time"] is not None
+    assert response is not None

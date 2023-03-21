@@ -1,3 +1,9 @@
+# v0.0.6
+
+## Added
+- add get loca reputation output API ([commit](https://github.com/LNOpenMetrics/py-lnmetrics.api/commit/20ca10460060ea8248afe47070f7ac1f9a4948b2)). @vincenzopalazzo 21-03-2023
+
+
 # v0.0.5
 
 ## Fixed
