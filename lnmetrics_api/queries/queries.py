@@ -123,3 +123,82 @@ query MetricOne($network: String!, $node_id: String!, $first: Int!, $last: Int!)
   }
 }
 """
+
+LOCAL_SCORE_OUTPUT = """
+query LocalScoreOutput($network: String!, $node_id: String!) {
+  getMetricOneResult(network: $network, node_id: $node_id) {
+    age
+    last_update
+    version
+    up_time {
+      one_day
+      ten_days
+      thirty_days
+      six_months
+    }
+    forwards_rating {
+      one_day {
+        success
+        failure
+        local_failure
+      }
+      ten_days {
+        success
+        failure
+        local_failure
+      }
+      thirty_days {
+        success
+        failure
+        local_failure
+      }
+      six_months {
+        success
+        failure
+        local_failure
+      }
+      full {
+        success
+        failure
+        local_failure
+      }
+    }
+    channels_info {
+      node_id
+      alias
+      channel_id
+      capacity
+      direction
+      up_time {
+        one_day
+        ten_days
+        thirty_days
+        six_months
+        full
+      }
+      forwards_rating {
+      one_day {
+        success
+        failure
+        local_failure
+      }
+        thirty_days {
+        success
+        failure
+        local_failure
+      }
+        six_months {
+        success
+        failure
+        local_failure
+      }
+      full {
+          success
+          failure
+          local_failure
+        }
+      }
+    }
+  }
+}
+"""

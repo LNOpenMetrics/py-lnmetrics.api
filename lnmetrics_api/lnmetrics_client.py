@@ -5,11 +5,13 @@ Open LN metrics services.
 author: https://github.com/vincenzopalazzo
 """
 import logging
-from typing import Dict, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 from gql import gql, Client
 from gql.transport.aiohttp import AIOHTTPTransport
 from gql.transport.requests import log as requests_logger
+
+from lnmetrics_api.queries.queries import LOCAL_SCORE_OUTPUT
 from .queries import GET_NODE, GET_NODES, GET_METRIC_ONE
 
 
@@ -86,3 +88,13 @@ class LNMetricsClient:
         }
         resp = self.call(query, variables=variables)
         return LNMetricsClient.__unwrap_error("metricOne", resp)
+
+    def get_local_score_output(self, network: str, node_id: str) -> Dict[str, Any]:
+        """Return the Local Score Output"""
+        query = gql(LOCAL_SCORE_OUTPUT)
+        variables = {
+            "network": network,
+            "node_id": node_id,
+        }
+        resp = self.call(query, variables=variables)
+        return LNMetricsClient.__unwrap_error("getMetricOneResult", resp)
