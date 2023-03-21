@@ -5,10 +5,11 @@ Open LN metrics services.
 author: https://github.com/vincenzopalazzo
 """
 import logging
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 
 from gql import gql, Client
 from gql.transport.aiohttp import AIOHTTPTransport
+from gql.transport.requests import RequestsHTTPTransport
 from gql.transport.requests import log as requests_logger
 
 from lnmetrics_api.queries.queries import LOCAL_SCORE_OUTPUT
@@ -21,9 +22,16 @@ class LNMetricsClient:
     """
 
     def __init__(
-        self, service_url: str, timeout: int = 40, log_level=logging.WARNING
+        self,
+        service_url: str,
+        timeout: int = 40,
+        sync: bool = False,
+        log_level=logging.WARNING,
     ) -> None:
-        transport = AIOHTTPTransport(url=service_url)
+        if sync is True:
+            transport = RequestsHTTPTransport(url=service_url)
+        else:
+            transport = AIOHTTPTransport(url=service_url)
         requests_logger.setLevel(log_level)
         self.client = Client(
             transport=transport,

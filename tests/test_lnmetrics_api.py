@@ -11,6 +11,13 @@ def test_get_nodes_call(client: LNMetricsClient) -> None:
     assert "errors" not in response
 
 
+def test_get_nodes_sync_call(sync_client: LNMetricsClient) -> None:
+    """Test GetNodes call"""
+    response = sync_client.get_nodes(network="bitcoin")
+    logging.debug(f"Response {response}")
+    assert "errors" not in response
+
+
 def test_get_node_call(client: LNMetricsClient) -> None:
     """Test GetNodes call"""
     response = client.get_nodes(network="bitcoin")
